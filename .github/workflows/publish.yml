@@ -1,0 +1,50 @@
+name: Publish
+
+# This workflow is triggered on every tag push and can also be triggered manually.
+on:
+  push:
+    tags:
+      - "v[0-9]+.[0-9]+.[0-9]+*"
+  workflow_dispatch:
+
+# First, checks out repository, installs dependencies, and runs tests.
+# Then, builds the package and publishes it to PyPI.
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    environment: pypi
+
+    steps:
+      - name: 🛎️ Checkout
+        uses: actions/checkout@v4
+
+      - name: 📦 Install uv
+        uses: astral-sh/setup-uv@v5
+
+      - name: 🐍 Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version-file: ".python-version"
+
+      - name: 🦾 Install the project
+        run: make dev-sync
+          
+      - name: 💅 🧪 Format, Lint and test
+        run: make validate
+
+      - name: 🏗️ Build distribution
+        run: uv build
+
+      - name: 📩 Set PYPI token as env variable for UV
+        run: echo "UV_PUBLISH_TOKEN=${{ secrets.PYPI_TOKEN }}" >> $GITHUB_ENV
+
+      - name: 📢 Publish to PyPI
+        run: uv publish
+
+      - name: 👌 Check upload
+        run: |
+          TAG=${GITHUB_REF#refs/tags/}
+          VERSION=${TAG:1}
+          echo "Version: $VERSION"
+          uv run --with strava-client==$VERSION --no-project -- python -c "import strava_client"

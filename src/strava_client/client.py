@@ -83,7 +83,16 @@ class StravaClient:
         keys: list[str] | None = None,
     ) -> StravaActivityStream:
         """
-        Get the activities for the authenticated user.
+        Get the activity stream for a given activity ID.
+        See the Strava API documentation for more details:
+        https://developers.strava.com/docs/reference/#api-Streams-getActivityStreams
+
+        Args:
+            id (str):
+                The ID of the activity.
+            keys (list[str] | None):
+                The keys of the streams to retrieve.
+                If None, all streams are retrieved.
         """
 
         self._verify_token()

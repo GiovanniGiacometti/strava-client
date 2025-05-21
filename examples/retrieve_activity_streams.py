@@ -17,3 +17,5 @@ if __name__ == "__main__":
             "velocity_smooth",
         ],
     )
+
+    print(res.velocity_smooth)

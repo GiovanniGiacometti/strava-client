@@ -46,6 +46,24 @@ class StravaClient:
     ) -> list[StravaActivity]:
         """
         Get the activities for the authenticated user.
+
+        See the Strava API documentation for more details:
+        https://developers.strava.com/docs/reference/#api-Activities-getLoggedInAthleteActivities
+        Args:
+            before (datetime | None):
+                The date before which to retrieve activities.
+                If None, no limit is applied.
+            after (datetime | None):
+                The date after which to retrieve activities.
+                If None, no limit is applied.
+            page (int):
+                The page number to retrieve.
+            per_page (int):
+                The number of activities per page.
+
+        Returns:
+            list[StravaActivity]:
+                The list of activities.
         """
 
         self._verify_token()
@@ -93,6 +111,10 @@ class StravaClient:
             keys (list[str] | None):
                 The keys of the streams to retrieve.
                 If None, all streams are retrieved.
+
+        Returns:
+            StravaActivityStream:
+                The activity stream.
         """
 
         self._verify_token()

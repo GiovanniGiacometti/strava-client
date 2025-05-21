@@ -8,4 +8,8 @@ wheels/
 
 # Virtual environments
 .venv
+.mypy_cache
+.pytest_cache
+.ruff_cache
+.uv-cache
 .strava.secrets

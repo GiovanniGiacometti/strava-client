@@ -24,7 +24,7 @@ dependencies = [
 
 
 [project.urls]
-"Repository" = "https://github.com/GiovanniGiacometti/light-strava-client"
+"Repository" = "https://github.com/GiovanniGiacometti/strava-client"
 
 [dependency-groups]
 dev = [

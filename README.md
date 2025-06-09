@@ -40,9 +40,9 @@ The good news is that `strava-client` can take care of this process for you (par
 
 #### Authentication
 
-Once you have the application, insert its information in a file called `.strava.secrets`. You can find an example of the file in the repo. Notice that you can change the default name name of the settings file by changing the related variable in the `constants.py` file. 
-
-Alternatively, you can put them in a `.env` file and use the `load_dotenv` function from the `dotenv` package to load them.
+Once you have the application, we need to pass the its information to the library. There are 2 possibilities:
+- insert them in a file called `.strava.secrets`. You can find an example of how the file should look like in the file named `.strava.secrets.example`. Notice that you can change the name name of the settings file by changing the related variable in the `constants.py` file. 
+- insert them in a `.env` file and use the `load_dotenv` function from the `dotenv` package to load them before creating the `StravaClient` class. As in the other option, you can check out the example file to see the required structure.
 
 This magic is powered by the [pydantic_settings](https://docs.pydantic.dev/latest/concepts/pydantic_settings/) package. For more information, check out the definition of the model and the expected types in the `strava_client/models/settings.py` file.
 
@@ -50,6 +50,9 @@ Then, you can instantiate the client as follows:
 
 ```python
 from strava_client.client import StravaClient
+from dotenv import load_dotenv()
+
+# load_dotenv() # if needed..
 
 # Initialize with default scopes (read, activity:read_all)
 client = StravaClient()
@@ -64,7 +67,7 @@ If the refresh token is provided, the client will assume that the authentication
 
 Otherwise, it will automatically initiate the authentication procedure (the same described in the documentation). A browser window will open: you only need to authorize the application and paste the callback URL in the terminal. The client will take care of the rest.
 
-When the process is completed, the client will save the new access token and the refresh token in the `.strava.secrets` file, so that you can reuse them in the future.
+When the process is completed, the client will save the new access token and the refresh token in a `.strava.secrets` file, so that you can reuse them in the future.
 
 ### 💁 Call API!
 

@@ -29,6 +29,7 @@ class StravaClient:
         self,
         scopes: list[StravaScope | str] | None = None,
         settings: StravaSettings | None = None,
+        dump_settings: bool = True,
     ):
         """
         Initialize the Strava client.
@@ -39,8 +40,13 @@ class StravaClient:
             settings (StravaSettings | None):
                 The settings to use. If None, settings are loaded from environment variables
                 or from the default settings file.
+            dump_settings (bool):
+                Whether to dump the settings to the file after initialization.
+                This allows to save some time on following runs, as the access token
+                and refresh token will be already set.
         """
         self.settings = settings if settings else StravaSettings()  # type: ignore
+        self.dump_settings = dump_settings
 
         if scopes is None:
             self.scopes = DEFAULT_SCOPES
@@ -166,8 +172,11 @@ class StravaClient:
         If not, refresh it and update the settings.
         """
 
-        if int(datetime.now().timestamp()) >= self.settings.expires_at:
-            # Token expired
+        if (
+            self.settings.expires_at is not None
+            and int(datetime.now().timestamp()) >= self.settings.expires_at
+        ):
+            # Token expired or missing expiration time.
 
             strava_refresh_token_response = self._refresh_token()
             self._update_settings_and_dump(strava_refresh_token_response)
@@ -175,14 +184,15 @@ class StravaClient:
     def _update_settings_and_dump(self, response: StravaGetTokenResponse):
         """
         Update the settings after receiving a new access token
-        and dump them to the file.
+        and dump them to the file, if required.
         """
 
         self.settings.access_token = response.access_token
         self.settings.refresh_token = response.refresh_token
         self.settings.expires_at = response.expires_at
 
-        self.settings.dump()
+        if self.dump_settings:
+            self.settings.dump()
 
     def _verify_initialization(self):
         """

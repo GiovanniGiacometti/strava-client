@@ -25,8 +25,22 @@ class StravaClient:
     BASE_OAUTH_URL = "https://www.strava.com/oauth"
     BASE_SERVER_URL = "https://www.strava.com/api/v3"
 
-    def __init__(self, scopes: list[StravaScope | str] | None = None):
-        self.settings = StravaSettings()  # type: ignore
+    def __init__(
+        self,
+        scopes: list[StravaScope | str] | None = None,
+        settings: StravaSettings | None = None,
+    ):
+        """
+        Initialize the Strava client.
+
+        Args:
+            scopes (list[StravaScope | str] | None):
+                The scopes to request. If None, the default scopes are used.
+            settings (StravaSettings | None):
+                The settings to use. If None, settings are loaded from environment variables
+                or from the default settings file.
+        """
+        self.settings = settings if settings else StravaSettings()  # type: ignore
 
         if scopes is None:
             self.scopes = DEFAULT_SCOPES

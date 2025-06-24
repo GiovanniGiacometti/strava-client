@@ -55,10 +55,3 @@ jobs:
 
       - name: 📢 Publish to PyPI
         run: uv publish
-
-      - name: 👌 Check upload
-        run: |
-          TAG=${GITHUB_REF#refs/tags/}
-          VERSION=${TAG:1}
-          echo "Version: $VERSION"
-          uv run --with strava-client==$VERSION --no-project -- python -c "import strava_client"

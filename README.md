@@ -105,6 +105,10 @@ make dev-sync
 ### 🧪 Extending the client
 The client is designed to be easily extended. You can add new API endpoints by first creating the appropriate Pydantic model for the response and then adding a new method to the `StravaClient` class. You can leverage the existing authentication and request infrastructure to streamline the process.
 
+## 💡Examples 
+
+You can find an example of usage in the project [`marimo-strava-analyzer`](https://github.com/GiovanniGiacometti/strava-marimo-analyzer).
+
 ## 📝 Disclaimer
 
 This project is just meant to be a simple and lightweight wrapper around the Strava API. It is not meant to be a full-fledged production-ready client, but rather a starting point that you can extend to fit your needs. If you need more functionalities, you can checkout the awesome library [stravalib](https://github.com/stravalib/stravalib).

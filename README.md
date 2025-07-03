@@ -107,7 +107,7 @@ The client is designed to be easily extended. You can add new API endpoints by f
 
 ## 💡Examples 
 
-You can find an example of this library can be found in the project [`marimo-strava-analyzer`](https://github.com/GiovanniGiacometti/strava-marimo-analyzer). It's a Marimo notebook that uses the client to download Strava running activities and creates a dashboard to get some insights. Check out its README.md file for more details!
+You can see an example of this library in action in the project [`marimo-strava-analyzer`](https://github.com/GiovanniGiacometti/strava-marimo-analyzer). It's a Marimo notebook that uses the client to download Strava running activities and generates a dashboard with insightful visualization. Check out its README.md file for more details!
 
 ## 📝 Disclaimer
 
